@@ -7,51 +7,56 @@
 </head>
 <body>
 
-    
-    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/02/20/21/20250220213737-831CZE28.js"></script>
-    
-    
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/8b75af5d-6f6b-4462-94e9-39b2d506ed2e/webchat/config.js" defer></script>
+
     <script>
-        window.botpressWebChat.onEvent(
-            (event) => {
-                if (event.type === 'MESSAGE.RECEIVED') {
-                    console.log('A new message was received!');
+        window.addEventListener("load", function () {
+            if (window.botpressWebChat) {
+                window.botpressWebChat.init();
 
-                    if (event.value.payload.text === 'You can choose a file') {
-                        const fileInput = document.createElement('input');
-                        fileInput.type = 'file';
+                window.botpressWebChat.onEvent(
+                    (event) => {
+                        if (event.type === 'MESSAGE.RECEIVED') {
+                            console.log('A new message was received!');
 
-                        fileInput.addEventListener('change', (event) => {
-                            const file = event.target.files[0];
-                            console.log('Selected file:', file);
+                            if (event.value.payload.text === 'You can choose a file') {
+                                const fileInput = document.createElement('input');
+                                fileInput.type = 'file';
 
-                            const reader = new FileReader();
-                            reader.onload = async function (event) {
-                                const fileContent = event.target.result;
-                                const title = file.name;
-                                
-                                console.log('File content:', fileContent);
-                                console.log('File name:', title);
+                                fileInput.addEventListener('change', (event) => {
+                                    const file = event.target.files[0];
+                                    console.log('Selected file:', file);
 
-                                window.botpressWebChat.sendPayload({
-                                    type: 'trigger',
-                                    payload: {
-                                        title: title,
-                                        content: fileContent
-                                    }
-                                  }
-                                )
+                                    const reader = new FileReader();
+                                    reader.onload = async function (event) {
+                                        const fileContent = event.target.result;
+                                        const title = file.name;
+                                        
+                                        console.log('File content:', fileContent);
+                                        console.log('File name:', title);
+
+                                        window.botpressWebChat.sendPayload({
+                                            type: 'trigger',
+                                            payload: {
+                                                title: title,
+                                                content: fileContent
+                                            }
+                                        });
+                                    };
+                                    reader.readAsText(file);
+                                });
+
+                                fileInput.click();
                             }
-                            reader.readAsText(file);
-                        })
-
-                        fileInput.click();
-                    }
-                }
-            },
-            ['MESSAGE.RECEIVED']
-        )
+                        }
+                    },
+                    ['MESSAGE.RECEIVED']
+                );
+            } else {
+                console.error("Botpress WebChat is not loaded yet.");
+            }
+        });
     </script>
 
 </body>
