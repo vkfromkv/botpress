@@ -40,17 +40,18 @@
                                         title: title,
                                         content: fileContent
                                     }
-                                });
-                            };
+                                  }
+                                )
+                            }
                             reader.readAsText(file);
-                        });
+                        })
 
                         fileInput.click();
                     }
                 }
             },
             ['MESSAGE.RECEIVED']
-        );
+        )
     </script>
 
 </body>
