@@ -74,7 +74,7 @@
     
    
     <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2025/03/04/23/20250304230752-QRF544Y9.js"></script>
+    <script src="https://files.bpcontent.cloud/2025/03/04/23/20250304230752-QRF544Y9.js"></script>
     
 
     <div class="content">
@@ -158,8 +158,8 @@
                             payload: {
                                 title: title,
                                 content: fileContent.slice(0, 1000),
-                                type_of_doc: type_of_doc,
-                                error: errorMessage
+                                // type_of_doc: type_of_doc,
+                                // error: errorMessage
                             }
                         }
                         )
@@ -172,7 +172,7 @@
             fileInput.click();
 
             // Append the file input to the body
-            // document.body.appendChild(fileInput);
+            document.body.appendChild(fileInput);
         }
         // Function to extract text from a single page
         async function getTextFromPage(page) {
