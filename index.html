@@ -110,7 +110,7 @@
                 console.log("A new message was received!");
                 console.log(event)
                 const message_received = event?.payload?.payload?.blocks?.[0]?.block?.text ?? event?.payload?.payload?.block?.text;
-                if (message_received === 'please upload') {
+                if (message_received === 'You can choose a file') {
                     triggerFileUploadOnLoad();
                 }
             }
