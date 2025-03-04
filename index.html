@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botpress Chatbot</title>
+    <title>University Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #CFB991;
+            color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            background-color: white;
+            width: 350px;
+            height: 500px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        iframe {
+            flex-grow: 1;
+        }
+    </style>
 </head>
 <body>
-
-    
-    <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2025/02/20/21/20250220213737-831CZE28.js"></script>
-
-    <script>
-        window.botpressWebChat.onEvent(
-            (event) => {
-                if (event.type === 'MESSAGE.RECEIVED') {
-                    console.log('A new message was received!')
-                    if (event.value.payload.text === 'You can choose a file') {
-                        const fileInput = document.createElement('input');
-                        fileInput.type = 'file';
-                        fileInput.addEventListener('change', (event) => {
-                            const file = event.target.files[0];
-                            console.log('Selected file:', file);
-                            const reader = new FileReader();
-                            reader.onload = async function(event) {
-                                const fileContent = event.target.result;
-                                const title = file.name;
-                                console.log('File content:', fileContent);
-                                console.log('File name:', title);
-                                window.botpressWebChat.sendPayload({
-                                    type: 'trigger',
-                                    payload: {
-                                        title: title,
-                                        content: fileContent
-                                    }
-                                });
-                            };
-                            reader.readAsText(file);
-                        });
-                        fileInput.click();
-                    }
-                }
-            },
-            ['MESSAGE.RECEIVED']
-        );
-    </script>
+    <div class="chat-container">
+        <div class="header">
+            University Chatbot
+        </div>
+        <!-- Include the Botpress Chatbot iframe below -->
+        <iframe src="URL_OF_YOUR_BOTPRESS_CHATBOT" frameborder="0"></iframe>
+    </div>
 </body>
 </html>
