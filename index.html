@@ -3,55 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Chatbot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #CFB991;
-            color: black;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .chat-container {
-            background-color: white;
-            width: 350px;
-            height: 500px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .header {
-            background-color: black;
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-        iframe {
-            flex-grow: 1;
-        }
-    </style>
-</head>
-<body>
-    <div class="chat-container">
-        <div class="header">
-            University Chatbot
-        </div>
-        <!-- Include the Botpress Chatbot iframe below -->
-        <iframe src="URL_OF_YOUR_BOTPRESS_CHATBOT" frameborder="0"></iframe>
-    </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Academic Resources Chatbot</title>
     <style>
         body {
@@ -87,6 +38,13 @@
         button:hover {
             background-color: #333;
         }
+        .card {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
         #chatbot {
             position: fixed;
             bottom: 20px;
@@ -99,6 +57,18 @@
             overflow: hidden;
         }
     </style>
+    <script>
+        function toggleCard(cardId) {
+            var card = document.getElementById(cardId);
+            var cards = document.getElementsByClassName('card');
+            for (var i = 0; i < cards.length; i++) {
+                if (cards[i] !== card) {
+                    cards[i].style.display = 'none';
+                }
+            }
+            card.style.display = card.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </head>
 <body>
     <div class="content">
@@ -106,10 +76,27 @@
         <p>Find and manage information related to your courses, textbooks, and reading lists easily.</p>
         <p>Explore various academic tools and resources to enhance your learning experience.</p>
         <!-- Example buttons for actions -->
-        <button type="button">Course Details</button>
-        <button type="button">Textbook Resources</button>
-        <button type="button">Reading Lists</button>
-        <button type="button">Manage Account</button>
+        <button type="button" onclick="toggleCard('courseDetails')">Course Details</button>
+        <button type="button" onclick="toggleCard('textbookResources')">Textbook Resources</button>
+        <button type="button" onclick="toggleCard('readingLists')">Reading Lists</button>
+        <button type="button" onclick="toggleCard('manageAccount')">Manage Account</button>
+
+        <div id="courseDetails" class="card">
+            <h2>Course Details</h2>
+            <p>View your current course enrollments, upcoming classes, and syllabus details.</p>
+        </div>
+        <div id="textbookResources" class="card">
+            <h2>Textbook Resources</h2>
+            <p>Access textbooks, e-books, and other learning materials related to your courses.</p>
+        </div>
+        <div id="readingLists" class="card">
+            <h2>Reading Lists</h2>
+            <p>Explore recommended reading lists curated by your professors.</p>
+        </div>
+        <div id="manageAccount" class="card">
+            <h2>Manage Account</h2>
+            <p>Update your profile information, manage subscriptions, and view your academic records.</p>
+        </div>
     </div>
 </body>
 </html>
