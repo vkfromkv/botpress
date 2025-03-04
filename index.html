@@ -73,7 +73,7 @@
 <body>
     <script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2025/02/20/21/20250220213737-831CZE28.js"></script>
-    
+
     <div class="content">
         <h1>Welcome to the Academic Resources Portal</h1>
         <p>Find and manage information related to your courses, textbooks, and reading lists easily.</p>
@@ -101,5 +101,101 @@
             <p>Update your profile information, manage subscriptions, and view your academic records.</p>
         </div>
     </div>
+    <script>
+        let isBot = false;
+        // Listening to a message received event=
+        window.botpress.on('*', (event) => {
+            isBot = true;
+            if (event.type === "message") {
+                console.log("A new message was received!");
+                console.log(event)
+                const message_received = event?.payload?.payload?.blocks?.[0]?.block?.text ?? event?.payload?.payload?.block?.text;
+                if (message_received === 'please upload') {
+                    triggerFileUploadOnLoad();
+                }
+            }
+        });
+
+        function triggerFileUploadOnLoad() {
+            // Create a hidden file input element
+            const fileInput = document.createElement('input');
+            let errorMessage = '';
+            fileInput.type = "file";
+            fileInput.style.display = "none"; // Hide the file input
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                console.log('Selected file:', file);
+                let fileContent = '';
+                const title = file.name;
+                const type_of_doc = file.type;
+                const reader = new FileReader();
+                type_of_doc === 'application/pdf' ? reader.readAsArrayBuffer(file) : reader.readAsText(file);
+                reader.onload = async function (event) {
+                    console.log('File name:', title);
+                    console.log('File type:', type_of_doc)
+
+                    if (type_of_doc === 'application/pdf') 
+                    {
+                        const pdfData = new Uint8Array(event.target.result);
+                        fileContent = await extractPDFText(pdfData); 
+                    }
+                    else if(type_of_doc === 'text/plain')
+                    {
+                        fileContent= event.target.result;
+                    }
+                    else 
+                    {
+                        errorMessage = 'Please upload the supported files. pdf and txt only'
+                    }
+
+                    console.log('File content:', fileContent.slice(0, 100));
+                    if (isBot) {
+                        window.botpress.sendEvent({
+                            type: 'trigger',
+                            payload: {
+                                title: title,
+                                content: fileContent.slice(0, 1000),
+                                type_of_doc: type_of_doc,
+                                error: errorMessage
+                            }
+                        }
+                        )
+                    }
+                };
+            })
+
+
+            // Automatically trigger the file input on page load
+            fileInput.click();
+
+            // Append the file input to the body
+            document.body.appendChild(fileInput);
+        }
+        // Function to extract text from a single page
+        async function getTextFromPage(page) {
+            const textContent = await page.getTextContent();
+            let pageText = '';
+            textContent.items.forEach(function (item) {
+            pageText += item.str + ' '; // Append each line of text
+            });
+            return pageText;
+        }
+
+        // Function to process the PDF
+        async function extractPDFText(pdfData) {
+            const loadingTask = pdfjsLib.getDocument({ data: pdfData });
+            const pdf = await loadingTask.promise;
+            let fullText = ''; // Initialize an empty string to store the entire PDF text
+
+            // Loop through all pages
+            for (let i = 1; i <= pdf.numPages; i++) {
+            const page = await pdf.getPage(i);
+            const pageText = await getTextFromPage(page); // Extract text from the current page
+            fullText += pageText + '\n'; // Append text to the full document text
+            }
+
+            return fullText; // Return the complete extracted text
+        }
+    </script>
 </body>
 </html>
