@@ -47,3 +47,71 @@
     </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Resources Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #CFB991;
+            color: black;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .content {
+            background-color: white;
+            width: 80%;
+            height: 90%;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            border-radius: 5px;
+            overflow: auto;
+        }
+        button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #333;
+        }
+        #chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Welcome to the Academic Resources Portal</h1>
+        <p>Find and manage information related to your courses, textbooks, and reading lists easily.</p>
+        <p>Explore various academic tools and resources to enhance your learning experience.</p>
+        <!-- Example buttons for actions -->
+        <button type="button">Course Details</button>
+        <button type="button">Textbook Resources</button>
+        <button type="button">Reading Lists</button>
+        <button type="button">Manage Account</button>
+    </div>
+    <!-- Chatbot iframe positioned at the bottom right -->
+    <iframe id="chatbot" src="URL_OF_YOUR_BOTPRESS_CHATBOT"></iframe>
+</body>
+</html>
