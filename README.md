@@ -1,7 +1,2 @@
-# botpress
-BotPress HTML file
-Changes
-
-
-re1
-re2
+# Botpress
+### Here is the Botpress index.html code containing the javascript code, to trigger upload document feature.
